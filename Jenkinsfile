@@ -10,7 +10,8 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                // Cloning from the main branch
+                echo '=== Cloning Repository ==='
+                // ✅ Updated GitHub repo URL
                 git branch: 'main', url: 'https://github.com/Aishwarya-2004-manimaran/smart-ai-resume-analyzer.git'
             }
         }
@@ -18,11 +19,22 @@ pipeline {
         stage('Remove Old Container and Image') {
             steps {
                 echo '=== Stopping and Removing Old Container ==='
-                bat "docker stop %DOCKER_CONTAINER% || echo Container not running"
-                bat "docker rm %DOCKER_CONTAINER% || echo Container not found"
+                script {
+                    def stopStatus = bat(script: "docker stop %DOCKER_CONTAINER%", returnStatus: true)
+                    if (stopStatus != 0) {
+                        echo "Container not running"
+                    }
 
-                echo '=== Removing Old Docker Image ==='
-                bat "docker rmi %DOCKER_IMAGE% || echo Image not found or in use"
+                    def rmStatus = bat(script: "docker rm %DOCKER_CONTAINER%", returnStatus: true)
+                    if (rmStatus != 0) {
+                        echo "Container not found"
+                    }
+
+                    def rmiStatus = bat(script: "docker rmi %DOCKER_IMAGE%", returnStatus: true)
+                    if (rmiStatus != 0) {
+                        echo "Image not found or in use"
+                    }
+                }
             }
         }
 
