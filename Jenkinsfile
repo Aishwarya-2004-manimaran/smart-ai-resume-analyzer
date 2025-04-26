@@ -11,7 +11,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 // Cloning from the main branch
-                git branch: 'main', url: 'https://github.com/Anushkaraman/Resume_Builder_Analyzer.git'
+                git branch: 'main', url: 'https://github.com/Aishwarya-2004-manimaran/smart-ai-resume-analyzer.git'
             }
         }
 
