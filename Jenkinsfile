@@ -10,31 +10,19 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                echo '=== Cloning Repository ==='
-                // ✅ Updated GitHub repo URL
-                git branch: 'main', url: 'https://github.com/Aishwarya-2004-manimaran/smart-ai-resume-analyzer.git'
+                // Cloning from the main branch
+                git branch: 'main', url: 'https://github.com/Anushkaraman/Resume_Builder_Analyzer.git'
             }
         }
 
         stage('Remove Old Container and Image') {
             steps {
                 echo '=== Stopping and Removing Old Container ==='
-                script {
-                    def stopStatus = bat(script: "docker stop %DOCKER_CONTAINER%", returnStatus: true)
-                    if (stopStatus != 0) {
-                        echo "Container not running"
-                    }
+                bat "docker stop %DOCKER_CONTAINER% || echo Container not running"
+                bat "docker rm %DOCKER_CONTAINER% || echo Container not found"
 
-                    def rmStatus = bat(script: "docker rm %DOCKER_CONTAINER%", returnStatus: true)
-                    if (rmStatus != 0) {
-                        echo "Container not found"
-                    }
-
-                    def rmiStatus = bat(script: "docker rmi %DOCKER_IMAGE%", returnStatus: true)
-                    if (rmiStatus != 0) {
-                        echo "Image not found or in use"
-                    }
-                }
+                echo '=== Removing Old Docker Image ==='
+                bat "docker rmi %DOCKER_IMAGE% || echo Image not found or in use"
             }
         }
 
