@@ -31,14 +31,14 @@ import io
 from docx import Document
 from docx.shared import Inches, Pt
 from docx.enum.text import WD_ALIGN_PARAGRAPH
-from feedback.feedback import FeedbackManager
+ 
 from ui_components import (
     apply_modern_styles, hero_section, feature_card, about_section, 
     page_header, render_analytics_section, render_activity_section, 
     render_suggestions_section
 )
 from datetime import datetime
-from jobs.job_search import render_job_search
+
 from PIL import Image
 
 class ResumeApp:
