@@ -1,4 +1,3 @@
-
 """
 Smart Resume AI - Main Application
 """
